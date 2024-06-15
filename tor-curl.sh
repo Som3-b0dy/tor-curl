@@ -45,7 +45,7 @@ check_tor_ports() {
 }
 
 check_ip() {
-    torify curl https://api.ipify.org/
+    curl --socks5-hostname 127.0.0.1:9050 https://api.ipify.org/
 }
 
 kill_ip() {
@@ -53,7 +53,7 @@ kill_ip() {
 }
 
 tor_curl() {
-    torify curl "$first_arg"
+    curl --socks5-hostname 127.0.0.1:9050 "$first_arg"
 }
 
 print_help() {
