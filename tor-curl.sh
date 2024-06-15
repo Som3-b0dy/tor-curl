@@ -29,16 +29,16 @@ check_input() {
 }
 
 check_tor_ports() {
-    check_ports=$(ss -tln | grep -e "$TransPort" -e "$SocksPort" -e "$ControlPort" | wc -l)
+    check_ports=$(ss -tln | grep -e "$SocksPort" -e "$ControlPort" | wc -l)
     check_tor=$(sudo systemctl is-active tor)
     if [ $check_tor != "active" ]; then
         echo -e "${BOLD_RED}[!]${NC} Start tor service"
         echo -e "${BOLD}[$]${NC} sudo systemctl start tor"
     fi
-    if [[ $check_ports != 3 && $check_tor = "active" ]]; then
-        echo -e "${BOLD_RED}[!]${NC} Add necessary ports to $Torrc"
+    if [[ $check_ports != 2 && $check_tor = "active" ]]; then
+        echo -e "${BOLD_RED}[!]${NC} Add necessary settings to $Torrc"
         echo -e "${BOLD}[+]${NC} For example:"
-        printf -- "-> TransPort=9040\n-> SocksPort=9050\n-> ControlPort=9051\n"
+        printf -- "-> SocksPort=9050\n-> ControlPort=9051\n"
         echo -e "${BOLD_RED}[!]${NC} Restart tor service"
         echo -e "${BOLD}[$]${NC} sudo systemctl restart tor"
     fi
